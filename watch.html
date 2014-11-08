@@ -66,6 +66,12 @@
 
     </div><!-- /.container -->
 
+    <script>
+    ZiggeoApi.Events.on("submitted", function (data) {
+      alert("Submitted a new video with token '" + data.video.token + "'!");
+    });
+    </script>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
