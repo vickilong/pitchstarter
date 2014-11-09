@@ -82,8 +82,9 @@
 
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
-      var videosRef = usersRef.child("videos");
-      //var usernamesRef = usersRef.child("username");
+      var videosRef = dataRef.child("videos");
+      var authData = dataRef.getAuth();
+      var pwdRef = new Firebase('https://pitchstarter.firebaseio.com/users/' + authData.uid + '/password/email');usersRef.child(authData.uid).child("password").child("email");
 
       function getVideoTitleValue () {
         if ($(".videoTitle").val() != "") {
@@ -92,8 +93,20 @@
         return "Untitled";
       }
 
-      ZiggeoApi.Events.on("submitted", function (data) {
+      function getEmail (callback) {
+        pwdRef.once("value", function(data) {
+          console.log(data);
+          callback();
+        });
+      }
+
+      function pushData (data, callback) {
         videosRef.push({videoToken: data.video.token, createdAt: Firebase.ServerValue.TIMESTAMP, videoTitle: getVideoTitleValue()});
+      }
+
+      ZiggeoApi.Events.on("submitted", function (data) {
+        pushData(data, function () {return data;});
+        
         window.location.href = "index.html";
       });
 
@@ -111,7 +124,7 @@
 
       if (userIsLoggedIn()) {
         $(".nav").append(
-          "<li><a href=\"record.html\">Record Video</a></li>" +
+          "<li class=\"record active\"><a href=\"record.html\">Record Video</a></li>" +
           "<li class=\"logout\"><a href=\"#\">Logout</a></li>");
       }
       else {
@@ -122,7 +135,7 @@
 
       $(".logout").click(function() {
         logout(function () {
-          location.reload();
+          window.location.href("index.html");
         });
       });
 

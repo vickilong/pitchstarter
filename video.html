@@ -57,7 +57,7 @@
     <div class="container">
 
       <div class="starter-template">
-        
+
       </div>
 
       <div class="player">
@@ -76,7 +76,7 @@
 
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
-      var videosRef = usersRef.child("videos");
+      var videosRef = dataRef.child("videos");
 
       var $_GET = {};
       if(document.location.toString().indexOf('?') !== -1) {

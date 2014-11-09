@@ -85,6 +85,23 @@
         return $(".registerPassword").val();
       }
 
+      function loginUser (callback) {
+        dataRef.authWithPassword({
+          email : getRegisterEmailValue(),
+          password : getRegisterPasswordValue()
+        }, function(error, authData) {
+          if (error === null) {
+          // user authenticated with Firebase
+            console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+            dataRef.child('users').child(authData.uid).set(authData.password.email);
+            callback();
+          }
+          else {
+            console.log("Error authenticating user:", error);
+          }
+        });
+      }
+
       function registerUser (callback) {
         dataRef.createUser({
           email : getRegisterEmailValue(),
@@ -92,7 +109,7 @@
         }, function(error) {
           if (error === null) {
             console.log("Successfully registered.");
-            //callback();
+            loginUser(callback);
           }
           else {
             console.log("Error creating user:", error);
@@ -102,8 +119,8 @@
 
       $("form").on("submit", function (e) {
         e.preventDefault();
-        registerUser(function () {
-          window.location.href = "login.html";
+        registerUser( function () {
+          window.location.href="index.html";
         });
       });
 

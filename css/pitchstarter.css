@@ -8,19 +8,22 @@ body {
   background-color: #eee;
 }
 
-.form-signin, .form-register, .form-video {
+.form-signin, .form-register,
+.form-video, .form-settings {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 .form-signin .form-signin-heading,
 .form-register .form-register-heading,
-.form-video .form-video-heading {
+.form-video .form-video-heading,
+.form-settings .form-settings-heading {
   margin-bottom: 10px;
 }
 .form-signin .form-control,
 .form-register .form-control,
-.form-video .form-control {
+.form-video .form-control,
+.form-settings .form-settings {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
@@ -31,7 +34,8 @@ body {
 }
 .form-signin .form-control:focus,
 .form-register .form-control:focus,
-.form-video .form-control:focus {
+.form-video .form-control:focus,
+.form-settings .form-control:focus {
   z-index: 2;
 }
 .form-signin input[type="email"],
@@ -69,11 +73,20 @@ img {
 }
 
 p.ziggeo {
-  height: 255px;
+  min-height: 255px;
   background-color: #ffffff;
   margin: 1%;
+  height: auto;
 }
 
 p.ziggeo:hover {
   background-color: #b0c4de;
+}
+
+a {
+  word-wrap: break-word;
+}
+
+h1 {
+  word-wrap: break-word;
 }

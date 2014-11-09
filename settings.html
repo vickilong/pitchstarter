@@ -48,7 +48,6 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.html">Home</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -57,18 +56,14 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Record</h1>
-        <p class="lead">Record your pitch.</p>
+        <h1>Settings</h1>
+        <p class="lead">Edit your information.</p>
       </div>
 
-      <form class="form-video" role="form">
-        <h2 class="form-video-heading">Title</h2>
-        <input type="title" class="form-control videoTitle" placeholder="Untitled" required autofocus>
+      <form class="form-settings" role="form">
+        <input type="username" class="form-control settingsUsername" placeholder="Username" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block settingsSubmit" type="submit">Submit</button>
       </form>
-
-      <div class="recorder">
-        <div id="box"><ziggeo ziggeo-width=400 ziggeo-height=300></ziggeo></div>
-      </div>
 
     </div><!-- /.container -->
 
@@ -82,40 +77,21 @@
 
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
-      var videosRef = usersRef.child("videos");
+      var videosRef = dataRef.child("videos");
 
-      ZiggeoApi.Events.on("submitted", function (data) {
-        videosRef.push({videoToken: data.video.token, createdAt: Firebase.ServerValue.TIMESTAMP, videoTitle: getVideoTitleValue()});
-        window.location.href = "index.html";
-      });
-
-      function userIsLoggedIn () {
-        if (dataRef.getAuth() != null) {
-          return true;
-        }
-        return false;
+      function getUsernameValue () {
+        return $(".settingsUsername").val();
       }
 
-      function logout (callback) {
-        dataRef.unauth();
+      function saveUsername (callback) {
+        usersRef.push({username: getUsernameValue()});
         callback();
       }
 
-      if (userIsLoggedIn()) {
-        $(".nav").append(
-          "<li><a href=\"record.html\">Record Video</a></li>" +
-          "<li class=\"logout\"><a href=\"#\">Logout</a></li>" +
-          "<li class=\"settings active\"><a href=\"settings.html\">Settings</a></li>");
-      }
-      else {
-        $(".nav").append(
-          "<li><a href=\"login.html\">Login</a></li>" +
-          "<li><a href=\"register.html\">Register</a></li>");
-      }
-
-      $(".logout").click(function() {
-        logout(function () {
-          location.reload();
+      $("form").on("submit", function (e) {
+        e.preventDefault();
+        saveUsername(function () {
+          window.location.href = "index.html";
         });
       });
 
