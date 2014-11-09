@@ -62,7 +62,7 @@
       </div>
 
       <div class="player">
-        <ziggeo ziggeo-video='75c43dad76223ffe6ed120cd3e5dacc2'></ziggeo>
+        
       </div>
 
     </div><!-- /.container -->
@@ -78,14 +78,14 @@
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
       var videosRef = usersRef.child("videos");
-
-      var videosQuery = videosRef.orderByChild("createdAt");
-
-      videosRef.orderByChild("createdAt").on("child_added", function(snapshot) {
+      var videos = [];
+      
+      videosRef.on("child_added", function(snapshot) {
         var newVideo = snapshot.val();
-        console.log("Token: " + newVideo.videoToken);
-        console.log("Timestamp: " + newVideo.createdAt);
+        $(".player").append(
+          "<ziggeo ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo>");
       });
+
     </script>
 
   </body>
