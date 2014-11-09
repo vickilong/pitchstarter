@@ -59,6 +59,7 @@
         <h2 class="form-register-heading">Register</h2>
         <input type="email" class="form-control registerEmail" placeholder="Email address" required autofocus>
         <input type="password" class="form-control registerPassword" placeholder="Password" required>
+
         <button class="btn btn-lg btn-primary btn-block register" type="submit">Register</button>
       </form>
 
@@ -74,6 +75,7 @@
 
     <script>
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
+      var usersRef = dataRef.child("users");
 
       function getRegisterEmailValue () {
         return $(".registerEmail").val();
@@ -90,7 +92,7 @@
         }, function(error) {
           if (error === null) {
             console.log("Successfully registered.");
-            callback();
+            //callback();
           }
           else {
             console.log("Error creating user:", error);

@@ -55,7 +55,7 @@
 
       <div class="starter-template">
         <h1>Pitchstarter</h1>
-        <p class="lead">Watch video.</p>
+        <p class="lead">Watch pitches.</p>
       </div>
 
       <div class="player">
@@ -75,12 +75,20 @@
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
       var videosRef = usersRef.child("videos");
+    //  var usernamesRef=usersRef.child("username");
       var videos = [];
       
-      videosRef.on("child_added", function(snapshot) {
-        var newVideo = snapshot.val();
-        $(".player").append(
-          "<p class=\"ziggeo\"><ziggeo style=\"padding:10px 0px 10px 0px;\" ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo></p>");
+      function loadVideos (callback) {
+        videosRef.on("child_added", function(snapshot) {
+          var newVideo = snapshot.val();
+          $(".player").append(
+            "<a href=\"http://vi.taly.org/video.html?vidToken=" + newVideo.videoToken + "\"><p class=\"ziggeo\"><ziggeo style=\"padding:10px 0px 10px 0px\" ziggeo-width=200px ziggeo-height=200px ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo><span>Title: " + newVideo.videoTitle +"</span></p></a>"); //username of current user logged in
+          callback();
+        });
+      }
+
+      loadVideos(function () {
+        videosRef.off();
       });
 
       function userIsLoggedIn () {

@@ -1,5 +1,4 @@
 .starter-template {
-  padding: 40px 15px;
   text-align: center;
 }
 
@@ -9,17 +8,19 @@ body {
   background-color: #eee;
 }
 
-.form-signin, .form-register {
+.form-signin, .form-register, .form-video {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 .form-signin .form-signin-heading,
-.form-register .form-register-heading {
+.form-register .form-register-heading,
+.form-video .form-video-heading {
   margin-bottom: 10px;
 }
 .form-signin .form-control,
-.form-register .form-control {
+.form-register .form-control,
+.form-video .form-control {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
@@ -29,7 +30,8 @@ body {
   font-size: 16px;
 }
 .form-signin .form-control:focus,
-.form-register .form-control:focus {
+.form-register .form-control:focus,
+.form-video .form-control:focus {
   z-index: 2;
 }
 .form-signin input[type="email"],
@@ -45,4 +47,33 @@ body {
   border-top-right-radius: 0;
 }
 
-div {margin-left:auto; margin-right:auto;}
+div {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ziggeo {
+  padding: 5px;
+  width: 30%;
+  display: inline-block;
+}
+
+ziggeo > div {
+  z-index: 100;
+  position: relative;
+}
+
+.player {
+  min-height: 475px;
+  text-align: center;
+}
+
+p.ziggeo {
+  height: 350px;
+  background-color: #ffffff;
+  margin: 1%;
+}
+
+a {
+  display: inline;
+}

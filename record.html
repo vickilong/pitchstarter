@@ -57,9 +57,14 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Pitchstarter</h1>
-        <p class="lead">Record video.</p>
+        <h1>Record</h1>
+        <p class="lead">Record your pitch.</p>
       </div>
+
+      <form class="form-video" role="form">
+        <h2 class="form-video-heading">Title</h2>
+        <input type="title" class="form-control videoTitle" placeholder="Untitled" required autofocus>
+      </form>
 
       <div class="recorder">
         <div id="box"><ziggeo ziggeo-width=400 ziggeo-height=300></ziggeo></div>
@@ -78,10 +83,17 @@
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
       var usersRef = dataRef.child("users");
       var videosRef = usersRef.child("videos");
+      //var usernamesRef = usersRef.child("username");
+
+      function getVideoTitleValue () {
+        if ($(".videoTitle").val() != "") {
+          return $(".videoTitle").val();
+        }
+        return "Untitled";
+      }
 
       ZiggeoApi.Events.on("submitted", function (data) {
-        alert("Submitted a new video with token '" + data.video.token + "'!");
-        videosRef.push({videoToken: data.video.token, createdAt: Firebase.ServerValue.TIMESTAMP});
+        videosRef.push({videoToken: data.video.token, createdAt: Firebase.ServerValue.TIMESTAMP, videoTitle: getVideoTitleValue()});
         window.location.href = "index.html";
       });
 
