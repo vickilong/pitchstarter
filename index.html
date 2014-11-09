@@ -82,7 +82,7 @@
         videosRef.on("child_added", function(snapshot) {
           var newVideo = snapshot.val();
           $(".player").append(
-            "<a href=\"http://vi.taly.org/video.html?vidToken=" + newVideo.videoToken + "\"><p class=\"ziggeo\"><ziggeo style=\"padding:10px 0px 10px 0px\" ziggeo-width=200px ziggeo-height=200px ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo><span>Title: " + newVideo.videoTitle +"</span></p></a>"); //username of current user logged in
+            "<p class=\"ziggeo\"><ziggeo style=\"padding:10px 0px 10px 0px\" ziggeo-width=200px ziggeo-height=200px ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo><a href=\"http://vi.taly.org/video.html?vidToken=" + newVideo.videoToken + "&vidTitle=" + newVideo.videoTitle + "\"><span>Title: " + newVideo.videoTitle +"</span></a></p>"); //username of current user logged in
           callback();
         });
       }

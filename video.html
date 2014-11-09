@@ -57,14 +57,12 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Record</h1>
-        <p class="lead">Record your pitch.</p>
+        
       </div>
 
-      <form class="form-video" role="form">
-        <h2 class="form-video-heading">Title</h2>
-        <input type="title" class="form-control videoTitle" placeholder="Untitled" required autofocus>
-      </form>
+      <div class="player">
+
+      </div>
 
     </div><!-- /.container -->
 
@@ -75,6 +73,10 @@
     <script src="js/bootstrap.min.js"></script>
 
     <script>
+
+      var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
+      var usersRef = dataRef.child("users");
+      var videosRef = usersRef.child("videos");
 
       var $_GET = {};
       if(document.location.toString().indexOf('?') !== -1) {
@@ -93,23 +95,20 @@
       }
 
       vidToken = $_GET['vidToken'];
+      vidTitle = $_GET['vidTitle'];
 
-      var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
-      var usersRef = dataRef.child("users");
-      var videosRef = usersRef.child("videos");
-      //var usernamesRef = usersRef.child("username");
-
-      function getVideoTitleValue () {
-        if ($(".videoTitle").val() != "") {
-          return $(".videoTitle").val();
-        }
-        return "Untitled";
+      function addVideo () {
+        $(".player").append(
+          "<ziggeo ziggeo-video=\"" + vidToken + "\"></ziggeo>")
       }
 
-      ZiggeoApi.Events.on("submitted", function (data) {
-        videosRef.push({videoToken: data.video.token, createdAt: Firebase.ServerValue.TIMESTAMP, videoTitle: getVideoTitleValue()});
-        window.location.href = "index.html";
-      });
+      function addTitle () {
+        $(".starter-template").append(
+          "<h1>" + vidTitle + "</h1>");
+      }
+
+      addVideo();
+      addTitle();
 
       function userIsLoggedIn () {
         if (dataRef.getAuth() != null) {

@@ -58,7 +58,7 @@ div {
   display: inline-block;
 }
 
-ziggeo > div {
+img {
   z-index: 100;
   position: relative;
 }
@@ -69,11 +69,11 @@ ziggeo > div {
 }
 
 p.ziggeo {
-  height: 350px;
+  height: 255px;
   background-color: #ffffff;
   margin: 1%;
 }
 
-a {
-  display: inline;
+p.ziggeo:hover {
+  background-color: #b0c4de;
 }
