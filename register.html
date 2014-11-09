@@ -47,8 +47,8 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Home</a></li>
             <li><a href="record.html">Record Video</a></li>
-            <li class="active"><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li class="active"><a href="register.html">Register</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -56,11 +56,11 @@
 
     <div class="container">
 
-      <form class="form-signin" role="form">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="email" class="form-control loginEmail" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control loginPassword" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block login" type="submit">Sign in</button>
+      <form class="form-register" role="form">
+        <h2 class="form-register-heading">Register</h2>
+        <input type="email" class="form-control registerEmail" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control registerPassword" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block register" type="submit">Register</button>
       </form>
 
       </div>
@@ -76,29 +76,28 @@
     <script>
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
 
-      function getLoginEmailValue () {
-        return $(".loginEmail").val();
+      function getRegisterEmailValue () {
+        return $(".registerEmail").val();
       }
 
-      function getLoginPasswordValue () {
-        return $(".loginPassword").val();
+      function getRegisterPasswordValue () {
+        return $(".registerPassword").val();
       }
 
       $("form").on("submit", function (e) {
         e.preventDefault();
-        ref.authWithPassword({
-          email : getLoginEmailValue(),
-          password : getLoginPasswordValue()
-        }, function(error, authData) {
+        dataRef.createUser({
+          email : getRegisterEmailValue(),
+          password : getRegisterPasswordValue()
+        }, function(error) {
           if (error === null) {
-          // user authenticated with Firebase
-            console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+            console.log("User created successfully");
           }
           else {
-            console.log("Error authenticating user:", error);
+            console.log("Error creating user:", error);
           }
-        });;
-        //window.location.href = 'index.html';
+        });
+        console.log("test");
       });
 
     </script>
