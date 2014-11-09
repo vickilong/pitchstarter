@@ -57,15 +57,15 @@
 
       <form class="form-signin" role="form">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="email" class="form-control loginEmail" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control loginPassword" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block login" type="submit">Sign in</button>
       </form>
 
       <form class="form-register" role="form">
         <h2 class="form-register-heading">...or register</h2>
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="email" class="form-control registerEmail" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control registerPassword" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block register" type="submit">Register</button>
       </form>
 
@@ -82,15 +82,43 @@
     <script>
       var dataRef = new Firebase('https://pitchstarter.firebaseio.com//');
 
+      function getLoginEmailValue () {
+        return $(".loginEmail").val();
+      }
+
+      function getLoginPasswordValue () {
+        return $(".loginPassword").val();
+      }
+
+      function getRegisterEmailValue () {
+        return $(".registerEmail").val();
+      }
+
+      function getRegisterPasswordValue () {
+        return $(".registerPassword").val();
+      }
+
       $(".login").click(function() {
-        window.location.href = 'index.html';
+        ref.authWithPassword({
+          email : getLoginEmailValue(),
+          password : getLoginPasswordValue()
+        }, function(error, authData) {
+          if (error === null) {
+          // user authenticated with Firebase
+            console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+          }
+          else {
+            console.log("Error authenticating user:", error);
+          }
+        });;
+        //window.location.href = 'index.html';
       });
 
       $(".register").click(function() {
         dataRef.createUser({
-          email : "bobtony@firebase.com",
-          password : "correcthorsebatterystaple"
-          }, function(error) {
+          email : getRegisterEmailValue(),
+          password : getRegisterPasswordValue()
+        }, function(error) {
           if (error === null) {
             console.log("User created successfully");
           }
@@ -98,6 +126,7 @@
             console.log("Error creating user:", error);
           }
         });
+        console.log("test");
       });
 
     </script>
