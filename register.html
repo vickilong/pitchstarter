@@ -83,18 +83,25 @@
         return $(".registerPassword").val();
       }
 
-      $("form").on("submit", function (e) {
-        e.preventDefault();
+      function registerUser (callback) {
         dataRef.createUser({
           email : getRegisterEmailValue(),
           password : getRegisterPasswordValue()
         }, function(error) {
           if (error === null) {
             console.log("Successfully registered.");
+            callback();
           }
           else {
             console.log("Error creating user:", error);
           }
+        });
+      }
+
+      $("form").on("submit", function (e) {
+        e.preventDefault();
+        registerUser(function () {
+          window.location.href = "login.html";
         });
       });
 
