@@ -46,9 +46,6 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="record.html">Record Video</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -83,7 +80,36 @@
       videosRef.on("child_added", function(snapshot) {
         var newVideo = snapshot.val();
         $(".player").append(
-          "<ziggeo ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo>");
+          "<p class=\"ziggeo\"><ziggeo style=\"padding:10px 0px 10px 0px;\" ziggeo-video=\"" + newVideo.videoToken + "\"></ziggeo></p>");
+      });
+
+      function userIsLoggedIn () {
+        if (dataRef.getAuth() != null) {
+          return true;
+        }
+        return false;
+      }
+
+      function logout (callback) {
+        dataRef.unauth();
+        callback();
+      }
+
+      if (userIsLoggedIn()) {
+        $(".nav").append(
+          "<li><a href=\"record.html\">Record Video</a></li>" +
+          "<li class=\"logout\"><a href=\"#\">Logout</a></li>");
+      }
+      else {
+        $(".nav").append(
+          "<li><a href=\"login.html\">Login</a></li>" +
+          "<li><a href=\"register.html\">Register</a></li>");
+      }
+
+      $(".logout").click(function() {
+        logout(function () {
+          location.reload();
+        });
       });
 
     </script>
